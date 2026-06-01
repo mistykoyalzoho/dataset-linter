@@ -3,7 +3,7 @@
 > **AI-powered dataset quality linter for ML pipelines.**
 > Catch null rates, outliers, data leakage, schema drift, and semantic anomalies — before they silently corrupt your models.
 
-[![CI](https://github.com/rt/dataset-linter/actions/workflows/ci.yml/badge.svg)](https://github.com/rt/dataset-linter/actions/workflows/ci.yml)
+[![CI](https://github.com/mistykoyalzoho/dataset-linter/actions/workflows/ci.yml/badge.svg)](https://github.com/mistykoyalzoho/dataset-linter/actions/workflows/ci.yml)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE-MIT)
 
 ---
