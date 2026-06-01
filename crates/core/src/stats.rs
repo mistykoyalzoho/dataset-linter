@@ -136,7 +136,7 @@ fn compute_categorical(col: &Column) -> Option<CategoricalStats> {
     };
 
     let mut top_values: Vec<(String, usize)> = counts.into_iter().collect();
-    top_values.sort_by(|a, b| b.1.cmp(&a.1));
+    top_values.sort_by_key(|b| std::cmp::Reverse(b.1));
     top_values.truncate(10);
 
     Some(CategoricalStats {
