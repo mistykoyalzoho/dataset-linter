@@ -36,7 +36,9 @@ impl LintResult {
     }
 
     pub fn has_errors(&self) -> bool {
-        self.diagnostics.iter().any(|d| d.severity == Severity::Error)
+        self.diagnostics
+            .iter()
+            .any(|d| d.severity == Severity::Error)
     }
 }
 
