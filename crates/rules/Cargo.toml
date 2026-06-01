@@ -1,0 +1,14 @@
+[package]
+name = "dataset-linter-rules"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Built-in linting rules for dataset-linter"
+
+[dependencies]
+dataset-linter-core = { path = "../core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+statrs = { workspace = true }
+polars = { workspace = true }
+tracing = { workspace = true }

@@ -1,0 +1,21 @@
+id,name,age,salary,department,email,joined_at,performance_score,notes
+1,Alice,34,72000,Engineering,alice@example.com,2021-03-15,4.2,Good performer
+2,Bob,,85000,Engineering,bob@example.com,2020-01-10,3.8,
+3,Charlie,28,,Marketing,charlie@example.com,2022-06-01,4.5,New hire
+4,Diana,45,120000,Executive,diana@example.com,2019-09-20,,Senior leader
+5,,31,65000,Sales,missing@example.com,2021-11-30,3.1,
+6,Frank,38,78000,Engineering,frank@example.com,2020-05-15,4.0,
+7,Grace,29,62000,Marketing,grace@example.com,2023-01-10,3.9,
+8,Hank,999,70000,Sales,hank@example.com,2021-07-22,2.5,Outlier age
+9,Ivy,33,71000,Engineering,ivy@example.com,2020-03-18,4.1,
+10,Jack,41,95000,Executive,jack@example.com,2019-11-05,3.7,
+11,Alice,34,72000,Engineering,alice@example.com,2021-03-15,4.2,Good performer
+12,Karen,36,68000,Sales,karen@example.com,2022-02-14,3.5,
+13,Leo,27,58000,Marketing,leo@example.com,2023-04-01,4.3,
+14,Mona,50,,Executive,mona@example.com,2018-06-10,4.8,Top exec
+15,Nate,32,69000,Engineering,nate@example.com,2021-09-05,3.6,
+16,Olivia,30,64000,Sales,olivia@example.com,2022-08-20,3.4,
+17,Paul,44,88000,Executive,paul@example.com,2020-12-01,4.0,
+18,Quinn,26,55000,Marketing,quinn@example.com,2023-05-15,4.6,
+19,Rosa,39,76000,Engineering,rosa@example.com,2020-07-30,3.9,
+20,Sam,35,70000,Sales,sam@example.com,2021-04-12,3.3,

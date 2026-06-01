@@ -1,0 +1,16 @@
+[package]
+name = "dataset-linter-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Core linting engine for dataset-linter"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+csv = { workspace = true }
+polars = { workspace = true }
+statrs = { workspace = true }
+arrow = { workspace = true }

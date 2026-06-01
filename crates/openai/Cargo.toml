@@ -1,0 +1,15 @@
+[package]
+name = "dataset-linter-openai"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "OpenAI integration for dataset-linter"
+
+[dependencies]
+dataset-linter-core = { path = "../core" }
+async-openai = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
