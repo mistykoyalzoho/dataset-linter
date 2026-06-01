@@ -150,7 +150,9 @@ async fn main() -> Result<()> {
                             let tag = match insight.category {
                                 dataset_linter_openai::InsightCategory::TypeSuggestion => "TYPE",
                                 dataset_linter_openai::InsightCategory::QualityIssue => "QUALITY",
-                                dataset_linter_openai::InsightCategory::FeatureEngineering => "FEAT",
+                                dataset_linter_openai::InsightCategory::FeatureEngineering => {
+                                    "FEAT"
+                                }
                                 dataset_linter_openai::InsightCategory::DataLeakage => "LEAK",
                                 dataset_linter_openai::InsightCategory::BiasSignal => "BIAS",
                                 dataset_linter_openai::InsightCategory::General => "INFO",
@@ -200,8 +202,9 @@ async fn main() -> Result<()> {
                                 )
                             }
                             Some(dataset_linter_core::stats::ColumnStats::Categorical(cs)) => {
-                                format!("top='{}', empty={}",
-                                    cs.top_values.first().map(|(v,_)| v.as_str()).unwrap_or(""),
+                                format!(
+                                    "top='{}', empty={}",
+                                    cs.top_values.first().map(|(v, _)| v.as_str()).unwrap_or(""),
                                     cs.empty_count
                                 )
                             }
@@ -218,7 +221,12 @@ async fn main() -> Result<()> {
                     }
 
                     println!("\n{}: {}", "Dataset".bold(), dataset.name);
-                    println!("{}: {} rows, {} columns\n", "Shape".bold(), dataset.nrows(), dataset.ncols());
+                    println!(
+                        "{}: {} rows, {} columns\n",
+                        "Shape".bold(),
+                        dataset.nrows(),
+                        dataset.ncols()
+                    );
                     println!("{table}");
                 }
                 OutputFormat::Json => {
@@ -241,7 +249,11 @@ async fn main() -> Result<()> {
                         ("DQ-001", "high-null-rate", "Columns with >50% null values"),
                         ("DQ-002", "constant-column", "Columns with zero variance"),
                         ("DQ-003", "high-cardinality", "Possible ID/leakage columns"),
-                        ("DQ-004", "outlier-detector", "Statistical outlier detection (IQR)"),
+                        (
+                            "DQ-004",
+                            "outlier-detector",
+                            "Statistical outlier detection (IQR)",
+                        ),
                         ("DQ-005", "empty-column", "Entirely null columns"),
                         ("DQ-006", "duplicate-rows", "Fully duplicated rows"),
                     ];
@@ -254,12 +266,17 @@ async fn main() -> Result<()> {
                         ("DQ-001", "high-null-rate", "Columns with >50% null values"),
                         ("DQ-002", "constant-column", "Columns with zero variance"),
                         ("DQ-003", "high-cardinality", "Possible ID/leakage columns"),
-                        ("DQ-004", "outlier-detector", "Statistical outlier detection (IQR)"),
+                        (
+                            "DQ-004",
+                            "outlier-detector",
+                            "Statistical outlier detection (IQR)",
+                        ),
                         ("DQ-005", "empty-column", "Entirely null columns"),
                         ("DQ-006", "duplicate-rows", "Fully duplicated rows"),
-                    ].iter().map(|(c, n, d)| {
-                        serde_json::json!({"code": c, "name": n, "description": d})
-                    }).collect();
+                    ]
+                    .iter()
+                    .map(|(c, n, d)| serde_json::json!({"code": c, "name": n, "description": d}))
+                    .collect();
                     println!("{}", serde_json::to_string_pretty(&rules)?);
                 }
                 _ => {}
@@ -270,7 +287,10 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn print_table(result: &dataset_linter_core::LintResult, min_severity: dataset_linter_core::Severity) {
+fn print_table(
+    result: &dataset_linter_core::LintResult,
+    min_severity: dataset_linter_core::Severity,
+) {
     let mut table = Table::new();
     table.load_preset(UTF8_FULL);
     table.set_header(["Severity", "Code", "Column", "Message"]);
@@ -318,7 +338,10 @@ fn print_table(result: &dataset_linter_core::LintResult, min_severity: dataset_l
     }
 }
 
-fn print_json(result: &dataset_linter_core::LintResult, min_severity: dataset_linter_core::Severity) -> Result<()> {
+fn print_json(
+    result: &dataset_linter_core::LintResult,
+    min_severity: dataset_linter_core::Severity,
+) -> Result<()> {
     let filtered: Vec<_> = result
         .diagnostics
         .iter()

@@ -54,11 +54,7 @@ impl ColumnStats {
 }
 
 fn compute_numeric(col: &Column) -> Option<NumericStats> {
-    let vals: Vec<f64> = col
-        .f64()
-        .ok()?
-        .into_no_null_iter()
-        .collect();
+    let vals: Vec<f64> = col.f64().ok()?.into_no_null_iter().collect();
 
     if vals.is_empty() {
         return None;

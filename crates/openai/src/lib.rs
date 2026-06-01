@@ -7,11 +7,11 @@
 //! - Fix recommendations in natural language
 //! - Dataset summary generation
 
+use async_openai::config::OpenAIConfig as OAIConfig;
 use async_openai::types::{
     ChatCompletionRequestMessage, ChatCompletionRequestSystemMessage,
     ChatCompletionRequestUserMessage, CreateChatCompletionRequestArgs,
 };
-use async_openai::config::OpenAIConfig as OAIConfig;
 use async_openai::Client;
 use dataset_linter_core::{Dataset, LintResult, Severity};
 use serde::{Deserialize, Serialize};
@@ -70,7 +70,11 @@ impl Analyzer {
     }
 
     /// Analyze a dataset and its lint results, returning AI-generated insights.
-    pub async fn analyze(&self, dataset: &Dataset, lint_result: &LintResult) -> anyhow::Result<Vec<AIInsight>> {
+    pub async fn analyze(
+        &self,
+        dataset: &Dataset,
+        lint_result: &LintResult,
+    ) -> anyhow::Result<Vec<AIInsight>> {
         let dataset_summary = self.build_dataset_summary(dataset);
         let lint_summary = self.build_lint_summary(lint_result);
 
@@ -99,18 +103,15 @@ Limit to 5 most important insights."#
             .max_tokens(self.config.max_tokens as u32)
             .temperature(self.config.temperature)
             .messages([
-                ChatCompletionRequestMessage::System(
-                    ChatCompletionRequestSystemMessage {
-                        content: "You are a dataset quality expert. Respond only with valid JSON.".into(),
-                        name: None,
-                    },
-                ),
-                ChatCompletionRequestMessage::User(
-                    ChatCompletionRequestUserMessage {
-                        content: prompt.into(),
-                        name: None,
-                    },
-                ),
+                ChatCompletionRequestMessage::System(ChatCompletionRequestSystemMessage {
+                    content: "You are a dataset quality expert. Respond only with valid JSON."
+                        .into(),
+                    name: None,
+                }),
+                ChatCompletionRequestMessage::User(ChatCompletionRequestUserMessage {
+                    content: prompt.into(),
+                    name: None,
+                }),
             ])
             .build()?;
 
@@ -201,7 +202,10 @@ Limit to 5 most important insights."#
 
         for diag in &result.diagnostics {
             if diag.severity >= Severity::Warning {
-                lines.push(format!("[{}] {}: {}", diag.severity, diag.code, diag.message));
+                lines.push(format!(
+                    "[{}] {}: {}",
+                    diag.severity, diag.code, diag.message
+                ));
             }
         }
 

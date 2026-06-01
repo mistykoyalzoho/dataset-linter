@@ -54,9 +54,7 @@ impl Dataset {
                 } else {
                     0.0
                 };
-                let unique_count = col
-                    .n_unique()
-                    .unwrap_or(0);
+                let unique_count = col.n_unique().unwrap_or(0);
 
                 let stats = ColumnStats::compute(col);
 

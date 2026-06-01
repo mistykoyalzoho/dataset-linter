@@ -8,8 +8,12 @@ use crate::rules::Rule;
 pub struct HighNullRate;
 
 impl Rule for HighNullRate {
-    fn code(&self) -> &str { "DQ-001" }
-    fn name(&self) -> &str { "high-null-rate" }
+    fn code(&self) -> &str {
+        "DQ-001"
+    }
+    fn name(&self) -> &str {
+        "high-null-rate"
+    }
 
     fn check(&self, dataset: &Dataset) -> Vec<Diagnostic> {
         dataset
@@ -60,8 +64,12 @@ impl Rule for HighNullRate {
 pub struct ConstantColumn;
 
 impl Rule for ConstantColumn {
-    fn code(&self) -> &str { "DQ-002" }
-    fn name(&self) -> &str { "constant-column" }
+    fn code(&self) -> &str {
+        "DQ-002"
+    }
+    fn name(&self) -> &str {
+        "constant-column"
+    }
 
     fn check(&self, dataset: &Dataset) -> Vec<Diagnostic> {
         dataset
@@ -72,9 +80,14 @@ impl Rule for ConstantColumn {
                     Some(
                         Diagnostic::warning(
                             self.code(),
-                            format!("Column '{}' has only {} unique value — zero variance", col.name, col.unique_count),
+                            format!(
+                                "Column '{}' has only {} unique value — zero variance",
+                                col.name, col.unique_count
+                            ),
                         )
-                        .with_detail("Constant columns provide no signal to models and waste memory.")
+                        .with_detail(
+                            "Constant columns provide no signal to models and waste memory.",
+                        )
                         .with_suggestion("Drop this column before training.")
                         .with_source(SourceSpan {
                             column: Some(col.name.clone()),
@@ -94,8 +107,12 @@ impl Rule for ConstantColumn {
 pub struct HighCardinality;
 
 impl Rule for HighCardinality {
-    fn code(&self) -> &str { "DQ-003" }
-    fn name(&self) -> &str { "high-cardinality" }
+    fn code(&self) -> &str {
+        "DQ-003"
+    }
+    fn name(&self) -> &str {
+        "high-cardinality"
+    }
 
     fn check(&self, dataset: &Dataset) -> Vec<Diagnostic> {
         let nrows = dataset.nrows() as f64;
@@ -139,8 +156,12 @@ impl Rule for HighCardinality {
 pub struct OutlierDetector;
 
 impl Rule for OutlierDetector {
-    fn code(&self) -> &str { "DQ-004" }
-    fn name(&self) -> &str { "outlier-detector" }
+    fn code(&self) -> &str {
+        "DQ-004"
+    }
+    fn name(&self) -> &str {
+        "outlier-detector"
+    }
 
     fn check(&self, dataset: &Dataset) -> Vec<Diagnostic> {
         dataset
@@ -188,8 +209,12 @@ impl Rule for OutlierDetector {
 pub struct EmptyColumn;
 
 impl Rule for EmptyColumn {
-    fn code(&self) -> &str { "DQ-005" }
-    fn name(&self) -> &str { "empty-column" }
+    fn code(&self) -> &str {
+        "DQ-005"
+    }
+    fn name(&self) -> &str {
+        "empty-column"
+    }
 
     fn check(&self, dataset: &Dataset) -> Vec<Diagnostic> {
         dataset
@@ -221,8 +246,12 @@ impl Rule for EmptyColumn {
 pub struct DuplicateRows;
 
 impl Rule for DuplicateRows {
-    fn code(&self) -> &str { "DQ-006" }
-    fn name(&self) -> &str { "duplicate-rows" }
+    fn code(&self) -> &str {
+        "DQ-006"
+    }
+    fn name(&self) -> &str {
+        "duplicate-rows"
+    }
 
     fn check(&self, dataset: &Dataset) -> Vec<Diagnostic> {
         let dup_count = match dataset.df.is_duplicated() {
@@ -232,13 +261,11 @@ impl Rule for DuplicateRows {
 
         if dup_count > 0 {
             let pct = dup_count as f64 / dataset.nrows() as f64 * 100.0;
-            vec![
-                Diagnostic::warning(
-                    self.code(),
-                    format!("Dataset has {} duplicate rows ({:.1}%)", dup_count, pct),
-                )
-                .with_suggestion("Consider deduplicating: df.drop_duplicates()"),
-            ]
+            vec![Diagnostic::warning(
+                self.code(),
+                format!("Dataset has {} duplicate rows ({:.1}%)", dup_count, pct),
+            )
+            .with_suggestion("Consider deduplicating: df.drop_duplicates()")]
         } else {
             vec![]
         }
