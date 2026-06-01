@@ -3,3 +3,4 @@
 *.pdb
 *.csv.bak
 .env
+.omc/
